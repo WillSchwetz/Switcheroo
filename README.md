@@ -18,6 +18,8 @@ A lightweight Python utility for Windows that allows users to quickly cycle betw
 
 ## Installation
 
+Coming soon
+
 > [!CAUTION]
 > Note: This utility is designed for Windows only.
 
@@ -71,3 +73,5 @@ A lightweight Python utility for Windows that allows users to quickly cycle betw
 - Per-Window Hotkeys: Assign custom hotkeys to specific windows.
 
 - Auto-Start: Option to run the utility on Windows startup.
+
+- Installer for ease of installation and use
