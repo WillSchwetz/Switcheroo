@@ -3,3 +3,4 @@ pywinauto
 keyboard
 pystray
 pillow
+pygetwindow
