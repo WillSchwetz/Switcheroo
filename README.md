@@ -24,44 +24,50 @@ A lightweight Python utility for Windows that allows users to quickly cycle betw
 ---
 
 ## Usage
-A tray icon (blue square) will appear in your system tray.
+1. A tray icon (red car) will appear in your system tray.
 
-Right-click the tray icon:
+2. Right-click the tray icon:
 
-Toggle windows to include in cycling.
+3. Toggle windows to include in cycling.
 
-Refresh window list after opening/closing apps.
+4. Refresh window list after opening/closing apps.
 
-Quit the application.
+5. Quit the application.
 
-Use the hotkeys:
+6. Use the hotkeys:
 
-Ctrl + Alt + . → Cycle through selected windows.
+7. Ctrl + Alt + . → Cycle through selected windows.
 
-Ctrl + Alt + Q → Exit the program.
+8. Ctrl + Alt + Q → Exit the program.
+
+---
 
 ## Example Workflow
 
-Launch the utility — tray icon appears.
+1. Launch the utility — tray icon appears.
 
-Right-click → select your commonly used windows (e.g., Browser, IDE, Terminal).
+2. Right-click → select your commonly used windows (e.g., Browser, IDE, Terminal).
 
-Press Ctrl + Alt + Tab to switch between them without minimizing other applications.
+3. Press Ctrl + Alt + Tab to switch between them without minimizing other applications.
 
-Add or remove windows as needed via the tray menu.
+4. Add or remove windows as needed via the tray menu.
+
+---
 
 ## Limitations
 
-Only works on Windows.
+- Only works on Windows.
 
-Only top-level windows with non-empty titles are included.
+- Only top-level windows with non-empty titles are included.
 
-Hotkeys require the script to have focus permissions and may not work if blocked by other security software.
+- Hotkeys require the script to have focus permissions and may not work if blocked by other security software.
+
+---
 
 ## Future Improvements
 
-Persistence: Save selected windows between sessions (via JSON configuration).
+- Persistence: Save selected windows between sessions (via JSON configuration).
 
-Per-Window Hotkeys: Assign custom hotkeys to specific windows.
+- Per-Window Hotkeys: Assign custom hotkeys to specific windows.
 
-Auto-Start: Option to run the utility on Windows startup.
+- Auto-Start: Option to run the utility on Windows startup.
