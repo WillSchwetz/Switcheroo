@@ -22,3 +22,6 @@ Ensure you have Python 3.10+ installed. Then install the required packages:
 
 ```bash
 pip install -r requirements.txt
+
+[!NOTE]
+Note: This utility is designed for Windows only.
