@@ -18,7 +18,7 @@ A lightweight Python utility for Windows that allows users to quickly cycle betw
 
 ## Installation
 
-> [!NOTE]
+> [!CAUTION]
 > Note: This utility is designed for Windows only.
 
 ---
