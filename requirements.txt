@@ -1,0 +1,6 @@
+pywinctl
+pywinauto
+keyboard
+pystray
+pillow
+pygetwindow
