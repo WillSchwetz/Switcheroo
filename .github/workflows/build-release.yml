@@ -72,7 +72,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.version || github.ref_name }}
-          name: "Switchy ${{ github.event.inputs.version || github.ref_name }}"
+          name: "Switcheroo ${{ github.event.inputs.version || github.ref_name }}"
           files: dist/**
           prerelease: ${{ github.event.inputs.prerelease }}
         env:

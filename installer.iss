@@ -12,7 +12,7 @@ OutputBaseFilename=Switcheroo_Installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-SetupIconFile=icons\tray.ico
+SetupIconFile=icons\switcheroo.ico
 UninstallDisplayIcon={app}\{#AppExeName}
 
 [Languages]
