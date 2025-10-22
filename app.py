@@ -5,12 +5,15 @@ import keyboard
 import pystray
 from PIL import Image, ImageDraw
 from functools import partial
-
+import requests
+from pystray import Icon as icon, Menu as menu, MenuItem as item
 # --- Globals ---
 windows = []
 selected_ids = set()   # store window HWNDs instead of titles
 current_index = 0
 running = True
+current_version = "v0.0.1"
+update_available = False
 
 # --- Window management ---
 def refresh_windows():
@@ -48,48 +51,13 @@ def next_window():
     except Exception as e:
         print("Error switching window:", e)
 
-# --- Tray icon creation ---
-def create_icon_image():
-    img = Image.new('RGBA', (64, 64), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-
-    # car body (simple hatchback silhouette)
-    body = [
-        (8, 40),   # rear lower
-        (8, 32),   # rear top
-        (14, 26),  # rear slope
-        (28, 20),  # roof rear
-        (40, 18),  # roof front
-        (50, 22),  # windshield/front slope
-        (56, 30),  # front top
-        (56, 36),  # front lower
-        (8, 40)    # close
-    ]
-    draw.polygon(body, fill=(200, 25, 30, 255), outline=(120, 10, 12, 255))
-
-    # windows (light gray/blue)
-    windows = [(16, 30), (26, 22), (36, 20), (46, 24), (34, 24), (24, 28)]
-    draw.polygon(windows, fill=(200, 220, 235, 220), outline=(120, 140, 150, 200))
-
-    # door line / simple detailing
-    draw.line([(32, 22), (32, 36)], fill=(110, 10, 12, 255), width=1)
-    draw.line([(22, 34), (46, 34)], fill=(150, 20, 22, 200), width=1)
-
-    # wheels
-    left_center = (22, 46)
-    right_center = (44, 46)
-    for cx, cy in (left_center, right_center):
-        draw.ellipse([cx-6, cy-6, cx+6, cy+6], fill=(20, 20, 20, 255))    # tyre
-        draw.ellipse([cx-3, cy-3, cx+3, cy+3], fill=(170, 170, 170, 255)) # hubcap
-
-    # headlight (small yellow) and hint of grille
-    draw.ellipse([50, 30, 54, 34], fill=(255, 220, 100, 220))
-    draw.line([(52, 34), (52, 36)], fill=(120, 12, 15, 200), width=1)
-    return img
-
 def rebuild_tray_menu():
     global tray_icon
     items = []
+
+    
+
+
 
     # helper for checked callback
     def _is_selected(hwnd, item=None):
@@ -113,6 +81,8 @@ def rebuild_tray_menu():
     # Add separators and commands
     items += [
         pystray.Menu.SEPARATOR,
+        pystray.MenuItem(f"{'❗' if update_available else ''} Update App", lambda:None, enabled=False),
+        pystray.Menu.SEPARATOR,
         pystray.MenuItem("Refresh Windows", lambda: threading.Thread(target=refresh_windows).start()),
         pystray.MenuItem("Quit", quit_program)
     ]
@@ -128,9 +98,10 @@ def quit_program(icon=None, item=None):
 
 def setup_tray():
     global tray_icon
+    image = Image.open("icons/switcheroo.ico")
     tray_icon = pystray.Icon(
         "WindowSwitcher",
-        create_icon_image(),
+        image,
         "Window Switcher",
         menu=pystray.Menu(
             pystray.MenuItem("Loading windows...", lambda: None)
@@ -145,8 +116,14 @@ def start_hotkeys():
     keyboard.add_hotkey('ctrl+alt+q', quit_program)
     print("Hotkeys:")
     print(" - Ctrl+Alt+.: Cycle selected windows")
-    print(" - Ctrl+Alt+Q: Quit")
     keyboard.wait('ctrl+alt+q')
+
+def check_for_updates():
+    repo = "WillSchwetz/task_switch"
+    response = requests.get(f"https://api.github.com/repos/{repo}/releases/latest").json()
+    latest_version = response.get("tag_name", "")
+    if latest_version and latest_version != current_version:
+        update_available = True
 
 # --- Main ---
 if __name__ == "__main__":

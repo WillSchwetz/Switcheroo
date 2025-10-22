@@ -4,3 +4,4 @@ keyboard
 pystray
 pillow
 pygetwindow
+requests
