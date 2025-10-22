@@ -27,6 +27,7 @@ jobs:
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --noconsole --onefile --icon=icons/switcheroo.ico app.py
+          dir dist
 
       - name: Install Inno Setup
         run: |
@@ -39,6 +40,7 @@ jobs:
 
       - name: Build Installer with Inno Setup
         run: |
+          cd ${{ github.workspace }}
           iscc installer.iss
 
       - name: Upload installer artifact
