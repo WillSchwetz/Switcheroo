@@ -4,6 +4,15 @@ on:
   push:
     tags:
       - 'v*'   # Run when pushing version tags like v1.0.0
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version number for this manual release (e.g., 1.2.3)"
+        required: false
+      prerelease:
+        description: "Mark this release as a pre-release?"
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -48,12 +57,12 @@ jobs:
         with:
           name: Switcheroo_Installer
           path: Output/  # Inno Setup creates an Output folder
-
+          
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download installer artifact
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           name: Switcheroo_Installer
@@ -62,6 +71,25 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.version || github.ref_name }}
+          name: "Switchy ${{ github.event.inputs.version || github.ref_name }}"
           files: dist/**
+          prerelease: ${{ github.event.inputs.prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # release:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download installer artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Switcheroo_Installer
+  #         path: dist/
+
+  #     - name: Create GitHub Release
+  #       uses: softprops/action-gh-release@v2
+  #       with:
+  #         files: dist/**
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
