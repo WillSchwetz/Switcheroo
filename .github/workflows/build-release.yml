@@ -38,7 +38,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --noconsole --onefile --name Switcheroo --icon=icons/switcheroo.ico app.py
+          pyinstaller --noconsole --onefile --name Switcheroo --icon=icons/switcheroo.ico --add-data "icons/switcheroo.ico;icons" app.py
           dir dist
 
       - name: Install Inno Setup

@@ -3,10 +3,10 @@ import pygetwindow as gw
 import pywinauto
 import keyboard
 import pystray
-from PIL import Image, ImageDraw
+from PIL import Image
 from functools import partial
 import requests
-from pystray import Icon as icon, Menu as menu, MenuItem as item
+import sys, os
 # --- Globals ---
 windows = []
 selected_ids = set()   # store window HWNDs instead of titles
@@ -14,6 +14,15 @@ current_index = 0
 running = True
 current_version = "v0.0.1"
 update_available = False
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 # --- Window management ---
 def refresh_windows():
@@ -98,7 +107,7 @@ def quit_program(icon=None, item=None):
 
 def setup_tray():
     global tray_icon
-    image = Image.open("icons/switcheroo.ico")
+    image = Image.open(resource_path("icons/switcheroo.ico"))
     tray_icon = pystray.Icon(
         "WindowSwitcher",
         image,
